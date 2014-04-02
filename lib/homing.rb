@@ -1,3 +1,1 @@
-class Homing
-
-end
+require 'homing/version'
