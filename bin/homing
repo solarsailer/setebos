@@ -1,0 +1,69 @@
+#!/usr/bin/env ruby
+require 'gli'
+require 'homing'
+
+include GLI::App
+
+# -------------------------------------------------------
+# Info.
+# -------------------------------------------------------
+
+program_desc 'Describe your application here'
+version      Homing::VERSION
+
+# -------------------------------------------------------
+# Switch.
+# -------------------------------------------------------
+
+desc   'Describe some switch here'
+switch [:s,:switch]
+
+# -------------------------------------------------------
+# Flags.
+# -------------------------------------------------------
+
+desc          'Describe some flag here'
+default_value 'the default'
+arg_name      'The name of the argument'
+flag          [:f,:flagname]
+
+# -------------------------------------------------------
+# Commands.
+# -------------------------------------------------------
+
+desc     'Describe new here'
+arg_name 'Describe arguments to new here'
+
+command :new do |c|
+  c.desc 'Describe a switch to new'
+  c.switch :s
+
+  c.desc 'Describe a flag to new'
+  c.default_value 'default'
+  c.flag :f
+  c.action do |global_options, options, args|
+    puts "new command ran"
+  end
+end
+
+# -------------------------------------------------------
+# Events.
+# -------------------------------------------------------
+
+pre do |global, command, options, args|
+  true
+end
+
+post do |global, command, options, args|
+
+end
+
+on_error do |exception|
+  true
+end
+
+# -------------------------------------------------------
+# Run.
+# -------------------------------------------------------
+
+exit run(ARGV)
