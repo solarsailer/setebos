@@ -1,69 +1,72 @@
 #!/usr/bin/env ruby
-require 'gli'
+require 'optparse'
+require 'colorize'
 require 'homing'
 
-include GLI::App
+# Option values.
+options = {}
 
-# -------------------------------------------------------
-# Info.
-# -------------------------------------------------------
+# Usage message.
+usage = nil
 
-program_desc 'Describe your application here'
-version      Homing::VERSION
+# Parser.
+parser = OptionParser.new do |opts|
 
-# -------------------------------------------------------
-# Switch.
-# -------------------------------------------------------
+  # -------------------------------------------------------
+  # Header.
+  # -------------------------------------------------------
 
-desc   'Describe some switch here'
-switch [:s,:switch]
+  opts.banner = "Usage: homing [options] run"
 
-# -------------------------------------------------------
-# Flags.
-# -------------------------------------------------------
+  # -------------------------------------------------------
+  # Options.
+  # -------------------------------------------------------
 
-desc          'Describe some flag here'
-default_value 'the default'
-arg_name      'The name of the argument'
-flag          [:f,:flagname]
+  opts.separator ''
+  opts.separator 'Options:'
 
-# -------------------------------------------------------
-# Commands.
-# -------------------------------------------------------
-
-desc     'Describe new here'
-arg_name 'Describe arguments to new here'
-
-command :new do |c|
-  c.desc 'Describe a switch to new'
-  c.switch :s
-
-  c.desc 'Describe a flag to new'
-  c.default_value 'default'
-  c.flag :f
-  c.action do |global_options, options, args|
-    puts "new command ran"
+  opts.on('-a', '--all', "Run everything") do |a|
+    options[:all] = true
   end
+
+  # -------------------------------------------------------
+  # Tails.
+  # -------------------------------------------------------
+
+  opts.separator ''
+
+  opts.on_tail('-h', '--help', "Show this message") do
+    puts opts
+    exit
+  end
+
+  opts.on_tail('-v', '--version', "Show version") do
+    puts 'homing ' + Homing::VERSION
+    exit
+  end
+
+  # Store usage.
+  usage = opts.to_s
 end
 
-# -------------------------------------------------------
-# Events.
-# -------------------------------------------------------
-
-pre do |global, command, options, args|
-  true
+# Parse the options and exit if an invalid option is present.
+begin
+  parser.parse!
+rescue
+  puts 'Invalid option(s).'.colorize(:red).bold
+  exit
 end
 
-post do |global, command, options, args|
+# Get the command.
+command = ARGV.shift
 
+# Execute. Abort if invalid command.
+case command
+when 'run'
+  puts options
+when nil
+  puts usage
+else
+  puts 'Invalid command.'.colorize(:red).bold
+  exit
 end
-
-on_error do |exception|
-  true
-end
-
-# -------------------------------------------------------
-# Run.
-# -------------------------------------------------------
-
-exit run(ARGV)
