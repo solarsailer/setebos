@@ -34,7 +34,7 @@ parser = OptionParser.new do |opts|
   # Header.
   # -------------------------------------------------------
 
-  opts.banner = "Usage: homing [options] run"
+  opts.banner = 'Usage: homing [options] run'
 
   # -------------------------------------------------------
   # Options.
@@ -43,7 +43,7 @@ parser = OptionParser.new do |opts|
   opts.separator ''
   opts.separator 'Options:'
 
-  opts.on('-a', '--all', "Run everything") do |a|
+  opts.on('-a', '--all', 'Run everything') do |a|
     options[:all] = true
   end
 
@@ -53,12 +53,12 @@ parser = OptionParser.new do |opts|
 
   opts.separator ''
 
-  opts.on_tail('-h', '--help', "Show this message") do
+  opts.on_tail('-h', '--help', 'Show this message') do
     puts opts
     exit
   end
 
-  opts.on_tail('-v', '--version', "Show version") do
+  opts.on_tail('-v', '--version', 'Show version') do
     puts 'homing ' + Homing::VERSION
     exit
   end
