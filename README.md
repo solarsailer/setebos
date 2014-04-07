@@ -43,15 +43,7 @@ confs:
 Then, call setebos:
 
 ```shell
-setebos # Look for a .setebos file.
-```
-
-Alternatively, you can use:
-
-```shell
-setebos --scripts # execute the scripts
-setebos --files   # send the files
-setebos --confs   # edit the confs
+setebos run /path/to/file
 ```
 
 # Inspiration
