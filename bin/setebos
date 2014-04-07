@@ -35,7 +35,7 @@ parser = OptionParser.new do |opts|
   # Header.
   # -------------------------------------------------------
 
-  opts.banner = 'Usage: setebos [options] run'
+  opts.banner = 'Usage: setebos [options] run /path/to/file'
 
   # -------------------------------------------------------
   # Options.
@@ -81,9 +81,12 @@ command = ARGV.shift
 # Execute. Abort if invalid command.
 case command
 when 'run'
-  puts __FILE__
-  puts ARGV[0]
-  # new Setebos(__dir__)
+  # Retrieve the file path.
+  path = ARGV[0]
+  error 'No file provided.' if !path
+
+  # Run the great Setebos.
+  Setebos::Run.new(path)
 when nil
   puts usage
 else

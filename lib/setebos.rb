@@ -1,8 +1,10 @@
 require 'setebos/version'
 
+# Setebos module.
 module Setebos
-  # Start command.
-  class Start
-
+  class Run
+    def initialize(path)
+      p path
+    end
   end
 end
