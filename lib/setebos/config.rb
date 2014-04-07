@@ -1,5 +1,6 @@
 require 'erb'
 require 'yaml'
+require 'active_support/core_ext/hash/indifferent_access'
 
 class Setebos::Config
 
@@ -12,12 +13,14 @@ class Setebos::Config
   #   Config.parse(./setebos.yml)
   #   # => Hash
   #
-  # Returns an Hash.
+  # Returns an HashWithIndifferentAccess.
   def self.parse(path)
-    YAML.load(
+    config = YAML.load(
       ERB.new(
         File.read(path)
       ).result
     )
+
+    HashWithIndifferentAccess.new(config)
   end
 end
