@@ -45,6 +45,17 @@ class Server
 
   private
 
+  # Private: Send a file via SCP.
+  #
+  # local_path  - the path of the local file.
+  # remote_path - the path of the remote file.
+  #
+  # Examples
+  #
+  #   scp('./tmp.txt', '/pxn/files/tmp.txt')
+  #   # => nil
+  #
+  # Returns nothing.
   def scp(local_path, remote_path)
     hash = {}
     hash[:password] = @password if @password
