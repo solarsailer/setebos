@@ -14,7 +14,7 @@ Write a simple YAML file called `Homingfile`:
 
 ```yaml
 server:
-  where: ip or name
+  host: ip or name
   user: username # optional, default to root
   password: password # optional
 
