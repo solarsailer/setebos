@@ -4,5 +4,5 @@ server:
 files:
   - from: samples/test01.txt
     to: /tmp
-  - from: samples/text02.txt
-    to: /tmp
+  - from: samples/test_with_$_chars_symb_42.md
+    to: /tmp/02/
