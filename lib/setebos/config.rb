@@ -13,7 +13,7 @@ class Setebos::Config
   #   Config.parse(./setebos.yml)
   #   # => Hash
   #
-  # Returns an HashWithIndifferentAccess.
+  # Returns an HashWithIndifferentAccess or nil.
   def self.parse(path)
     config = YAML.load(
       ERB.new(
@@ -22,5 +22,7 @@ class Setebos::Config
     )
 
     HashWithIndifferentAccess.new(config)
+  rescue
+    nil
   end
 end
