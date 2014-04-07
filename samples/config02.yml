@@ -1,0 +1,8 @@
+server:
+  host: setebos.example.com
+
+files:
+  - from: samples/test01.txt
+    to: /tmp
+  - from: samples/text02.txt
+    to: /tmp
