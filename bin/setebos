@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
 require 'optparse'
 require 'colorize'
-require 'homing'
+require 'setebos'
+require 'setebos/logger'
 
 # -------------------------------------------------------
 # Methods.
@@ -13,7 +14,7 @@ require 'homing'
 #
 # Returns nothing.
 def error(message)
-  puts message.colorize(:red).bold
+  Logger.error(message)
   exit
 end
 
@@ -34,7 +35,7 @@ parser = OptionParser.new do |opts|
   # Header.
   # -------------------------------------------------------
 
-  opts.banner = 'Usage: homing [options] run'
+  opts.banner = 'Usage: setebos [options] run'
 
   # -------------------------------------------------------
   # Options.
@@ -59,7 +60,7 @@ parser = OptionParser.new do |opts|
   end
 
   opts.on_tail('-v', '--version', 'Show version') do
-    puts 'homing ' + Homing::VERSION
+    puts 'setebos ' + Setebos::VERSION
     exit
   end
 
@@ -80,7 +81,9 @@ command = ARGV.shift
 # Execute. Abort if invalid command.
 case command
 when 'run'
-  puts options
+  puts __FILE__
+  puts ARGV[0]
+  # new Setebos(__dir__)
 when nil
   puts usage
 else

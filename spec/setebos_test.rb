@@ -1,6 +1,6 @@
 require 'minitest/spec'
 require 'minitest/autorun'
 
-describe Homing do
+describe Setebos do
 
 end

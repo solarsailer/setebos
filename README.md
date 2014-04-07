@@ -1,16 +1,16 @@
-Homing
-======
+Setebos
+=======
 
 For dev:
 
 ```shell
 export RUBYLIB=lib
-bin/homing
+bin/setebos
 ```
 
 # How to use?
 
-Write a simple YAML file called `Homingfile`:
+Write a simple YAML file called `.setebos`:
 
 ```yaml
 server:
@@ -40,18 +40,18 @@ confs:
     replace: line to replace # (if the line start by the value, replace the whole line)
 ```
 
-Then, call homing:
+Then, call setebos:
 
 ```shell
-homing # Look for an Homingfile.
+setebos # Look for a .setebos file.
 ```
 
 Alternatively, you can use:
 
 ```shell
-homing --scripts # execute the scripts
-homing --files   # send the files
-homing --confs   # edit the confs
+setebos --scripts # execute the scripts
+setebos --files   # send the files
+setebos --confs   # edit the confs
 ```
 
 # Inspiration

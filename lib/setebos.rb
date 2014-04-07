@@ -1,6 +1,6 @@
-require 'homing/version'
+require 'setebos/version'
 
-module Homing
+module Setebos
   # Start command.
   class Start
 
