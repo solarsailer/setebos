@@ -2,18 +2,25 @@ require 'setebos/logger'
 require 'net/scp'
 
 # Public: Server object.
-class Server
+class Setebos::Server
   attr_accessor :host, :user, :password
 
   # Public: Create a server object.
   #
-  # name     - the name of the server.
+  # hostname - the name of the server.
   # user     - (optional) the name of the user (default to root).
   # password - (optional) the password of the user.
-  def initialize(host, user: 'root', password: nil)
-    @host     = host
+  def initialize(hostname, user = 'root', password = nil)
+    @hostname = hostname
     @user     = user
     @password = password
+  end
+
+  # Public: Test the connection to the server.
+  #
+  # Returns `true` if success, `false` otherwise.
+  def test
+    system("ssh -q #{host} 'echo test'")
   end
 
   # Public: Send a group of files.
@@ -60,8 +67,26 @@ class Server
     hash = {}
     hash[:password] = @password if @password
 
-    Net::SCP.start(@host, @user, hash) do |scp|
+    Net::SCP.start(@hostname, @user, hash) do |scp|
       scp.upload! local_path, remote_path
     end
+  end
+
+  # Private: Create an host path.
+  #
+  # Examples
+  #
+  #   # Given a server with hostname = 'server' and user = 'user':
+  #   host()
+  #   # => 'user@server'
+  #
+  #   # Given a server with hostname = 'server' and user = 'user'
+  #   # and password = 'password':
+  #   host()
+  #   # => 'user:password@server'
+  #
+  # Returns a host String.
+  def host
+    "#{@user}#{@password ? ":#{@password}" : ''}@#{@hostname}"
   end
 end
