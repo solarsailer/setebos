@@ -5,20 +5,6 @@ require 'setebos'
 require 'setebos/logger'
 
 # -------------------------------------------------------
-# Methods.
-# -------------------------------------------------------
-
-# Public: Print an error and exit.
-#
-# message  - The message to display.
-#
-# Returns nothing.
-def error(message)
-  Logger.error(message)
-  exit
-end
-
-# -------------------------------------------------------
 # App.
 # -------------------------------------------------------
 
@@ -72,7 +58,7 @@ end
 begin
   parser.parse!
 rescue
-  error 'Invalid option(s).'
+  Logger.error 'Invalid option(s).'
 end
 
 # Get the command.
@@ -83,12 +69,12 @@ case command
 when 'run'
   # Retrieve the file path.
   path = ARGV[0]
-  error 'No file provided.' if !path
+  Logger.error 'No file provided.' if !path
 
   # Run the great Setebos.
-  Setebos::Run.new(path)
+  Setebos::Setebos.run(path)
 when nil
   puts usage
 else
-  error 'Invalid command.'
+  Logger.error 'Invalid command.'
 end
