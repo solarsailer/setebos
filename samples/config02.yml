@@ -1,5 +1,5 @@
 server:
-  host: setebos.example.com
+  host: setebos
 
 files:
   - from: samples/test01.txt
