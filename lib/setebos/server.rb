@@ -49,7 +49,7 @@ class Setebos::Server
     end
   end
 
-  # Private: Create a remote path.
+  # Public: Create a remote path.
   #
   # Examples
   #
