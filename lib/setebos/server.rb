@@ -3,6 +3,9 @@ require 'net/scp'
 
 # Public: Server object.
 class Setebos::Server
+
+  TEST_MESSAGE = 'A test connection was successfully established with the server.'
+
   attr_accessor :hostname, :user, :password
 
   # Public: Create a server object.
@@ -20,7 +23,7 @@ class Setebos::Server
   #
   # Returns `true` if success, `false` otherwise.
   def test
-    system("ssh -q #{remote()} 'echo test'")
+    system("ssh -q #{remote()} 'echo #{TEST_MESSAGE}'")
   end
 
   # Public: Send a group of files.
