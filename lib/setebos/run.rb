@@ -1,3 +1,4 @@
+require 'setebos/messages'
 require 'setebos/logger'
 require 'setebos/config'
 require 'setebos/server'
@@ -22,8 +23,8 @@ class Setebos::Run
   private
 
   def validate_files_section(files_section)
-    Logger.error 'There is no `files` section in the config.' if not files_section
-    Logger.error 'There is no `files` section in the config.' if not files_section.kind_of?(Array)
+    Logger.error Setebos::Messages::FILES_NIL if not files_section
+    Logger.error Setebos::Messages::FILES_NOT_ARRAY if not files_section.kind_of?(Array)
   end
 
   # Private: Create a server with the :server section of the config file.
@@ -32,7 +33,7 @@ class Setebos::Run
   #
   # Returns a Setebos::Server.
   def create_server(server_section)
-    Logger.info "Use #{server_section.to_s}..."
+    Logger.info Setebos::Messages::SERVER_START % server_section.to_s
 
     # Create.
     server = Setebos::Server.new(
@@ -43,7 +44,9 @@ class Setebos::Run
 
     # Test reachability.
     reachable = server.test()
-    Logger.error 'The server is not reachable. Abort.' if not reachable
+    Logger.error Setebos::Messages::NOT_REACHABLE if not reachable
+
+    Logger.success Setebos::Messages::SERVER_OK
 
     # Return the server.
     server
@@ -57,13 +60,13 @@ class Setebos::Run
   def send_files(files_section)
     validate_files_section(files_section)
 
-    Logger.info "Send files..."
+    Logger.info Setebos::Messages::SEND_FILES_START
 
     errors = @server.send_files(files_section)
     errors.each do |err|
-      Logger.warning "Warning: cannot send the #{f} file."
+      Logger.warning Setebos::Messages::FILE_NOT_SEND % err
     end
 
-    # Logger.success "Sending files done."
+    Logger.success Setebos::Messages::SEND_FILES_OK
   end
 end
