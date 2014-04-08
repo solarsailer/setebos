@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Setebos by solarsailer</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Setebos</h1>
+        <h2>A dead-simple tool to configure a remote machine.</h2>
+        <a href="https://github.com/solarsailer/setebos" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a name="setebos" class="anchor" href="#setebos"><span class="octicon octicon-link"></span></a>Setebos</h1>
+
+<p>Setebos is a dead-simple tool to configure a server.</p>
+
+<h2>
+<a name="how-to-use" class="anchor" href="#how-to-use"><span class="octicon octicon-link"></span></a>How to use?</h2>
+
+<p>Write a simple YAML file (preferably called <code>.setebos</code>):</p>
+
+<div class="highlight highlight-yaml"><pre><span class="c1"># Destination server.</span>
+<span class="l-Scalar-Plain">server</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">host</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">ip or name</span>
+  <span class="l-Scalar-Plain">user</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">username</span> <span class="c1"># optional, default to root</span>
+  <span class="l-Scalar-Plain">password</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">password</span> <span class="c1"># optional</span>
+
+<span class="c1"># Execute a list of scripts in the same order as below.</span>
+<span class="l-Scalar-Plain">scripts</span><span class="p-Indicator">:</span>
+  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">script1</span>
+  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">script2</span>
+  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">etc.</span>
+
+<span class="c1"># Copy these files to the server.</span>
+<span class="l-Scalar-Plain">files</span><span class="p-Indicator">:</span>
+  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">from</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">path/to/file1.sh</span>
+    <span class="l-Scalar-Plain">to</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">dest/for/</span>
+  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">from</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">path/to/find/file2.rb</span>
+    <span class="l-Scalar-Plain">to</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">dest</span>
+  <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">from</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">etc.</span>
+    <span class="l-Scalar-Plain">to</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">etc.</span>
+</pre></div>
+
+<p>Then, call setebos:</p>
+
+<div class="highlight highlight-bash"><pre>setebos run <span class="s1">'/path/to/config/file'</span>
+</pre></div>
+
+<h2>
+<a name="development" class="anchor" href="#development"><span class="octicon octicon-link"></span></a>Development</h2>
+
+<div class="highlight highlight-bash"><pre><span class="c"># Run the launcher.</span>
+bundle <span class="nb">exec </span>bin/setebos
+
+<span class="c"># Run the tests.</span>
+bundle <span class="nb">exec </span>rake <span class="nb">test</span>
+</pre></div>
+
+<p>Alternatively:</p>
+
+<div class="highlight highlight-bash"><pre><span class="nb">export </span><span class="nv">RUBYLIB</span><span class="o">=</span>lib
+bin/setebos
+</pre></div>
+
+<h2>
+<a name="future" class="anchor" href="#future"><span class="octicon octicon-link"></span></a>Future</h2>
+
+<ul>
+<li>Support port in the <code>server</code> section.</li>
+<li>Support user generation in a new <code>users</code> section.</li>
+<li>Support for configuration files edition in a dedicated section.</li>
+<li>Create boilerplate <code>.setebos</code> file with <code>setebos init</code>.</li>
+</ul><h2>
+<a name="inspiration" class="anchor" href="#inspiration"><span class="octicon octicon-link"></span></a>Inspiration</h2>
+
+<p>Inspired by <a href="http://fuckingshellscripts.org/">Fucking Shell Scripts</a>.</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/solarsailer/setebos/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/solarsailer/setebos/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/solarsailer/setebos"></a> is maintained by <a href="https://github.com/solarsailer">solarsailer</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-41853457-3");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
