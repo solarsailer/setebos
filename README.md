@@ -1,18 +1,14 @@
 Setebos
 =======
 
-For dev:
+Setebos is a dead-simple tool to configure a server.
 
-```shell
-export RUBYLIB=lib
-bin/setebos
-```
+## How to use?
 
-# How to use?
-
-Write a simple YAML file called `.setebos`:
+Write a simple YAML file (preferably called `.setebos`):
 
 ```yaml
+# Destination server.
 server:
   host: ip or name
   user: username # optional, default to root
@@ -24,7 +20,7 @@ scripts:
   - script2
   - etc.
 
-# Files to move to the server.
+# Copy these files to the server.
 files:
   - from: path/to/file1.sh
     to: dest/for/
@@ -32,20 +28,38 @@ files:
     to: dest
   - from: etc.
     to: etc.
-
-# Edit configuration files.
-confs:
-  - file: name
-    add: line to add
-    replace: line to replace # (if the line start by the value, replace the whole line)
 ```
 
 Then, call setebos:
 
-```shell
-setebos run /path/to/file
+```bash
+setebos run '/path/to/config/file'
 ```
 
-# Inspiration
+## Development
+
+```bash
+# Run the launcher.
+bundle exec bin/setebos
+
+# Run the tests.
+bundle exec rake test
+```
+
+Alternatively:
+
+```bash
+export RUBYLIB=lib
+bin/setebos
+```
+
+## Future
+
+* Support port in the `server` section.
+* Support user generation in a new `users` section.
+* Support for configuration files edition in a dedicated section.
+* Create boilerplate `.setebos` file with `setebos init`.
+
+## Inspiration
 
 Inspired by [Fucking Shell Scripts](http://fuckingshellscripts.org/).
