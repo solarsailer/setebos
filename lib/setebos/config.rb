@@ -1,6 +1,8 @@
+require 'active_support/core_ext/hash/indifferent_access'
 require 'erb'
 require 'yaml'
-require 'active_support/core_ext/hash/indifferent_access'
+
+require 'setebos/messages'
 
 class Setebos::Config
 
@@ -26,8 +28,8 @@ class Setebos::Config
 
   # Exit with a message if error.
   rescue Errno::ENOENT
-    Logger.error 'Nonexistent file.'
+    Logger.error Setebos::Messages::CONFIG_NONEXISTENT
   rescue
-    Logger.error 'Invalid file.'
+    Logger.error Setebos::Messages::CONFIG_INVALID
   end
 end
