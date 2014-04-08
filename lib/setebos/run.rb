@@ -8,8 +8,11 @@ class Setebos::Run
   def initialize(path)
     @config = Setebos::Config.parse(path)
 
-    # Server.
+    # Init server.
     @server = create_server(@config[:server])
+
+    # Send files.
+    send_files(@config[:files])
   end
 
   # -------------------------------------------------------
@@ -18,21 +21,49 @@ class Setebos::Run
 
   private
 
+  def validate_files_section(files_section)
+    Logger.error 'There is no `files` section in the config.' if not files_section
+    Logger.error 'There is no `files` section in the config.' if not files_section.kind_of?(Array)
+  end
+
   # Private: Create a server with the :server section of the config file.
   #
-  # server_section - Server section of the config file..
+  # server_section - Server section of the config file.
   #
   # Returns a Setebos::Server.
   def create_server(server_section)
-    Logger.info "Create a server for #{server_section.to_s}..."
+    Logger.info "Use #{server_section.to_s}..."
 
+    # Create.
     server = Setebos::Server.new(
       server_section[:host],
       user:     server_section[:user],
       password: server_section[:password]
     )
 
+    # Test reachability.
     reachable = server.test()
     Logger.error 'The server is not reachable. Abort.' if not reachable
+
+    # Return the server.
+    server
+  end
+
+  # Private: Send files to the machine.
+  #
+  # files_section - Array of files [{to: '...', from: '...'}, {...}].
+  #
+  # Returns nothing.
+  def send_files(files_section)
+    validate_files_section(files_section)
+
+    Logger.info "Send files..."
+
+    errors = @server.send_files(files_section)
+    errors.each do |err|
+      Logger.warning "Warning: cannot send the #{f} file."
+    end
+
+    # Logger.success "Sending files done."
   end
 end
