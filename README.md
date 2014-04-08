@@ -56,6 +56,7 @@ bin/setebos
 ## Future
 
 * Support port in the `server` section.
+* Look for a `.setebos` file automatically when not provided with the `run` command.
 * Support user generation in a new `users` section.
 * Support for configuration files edition in a dedicated section.
 * Create boilerplate `.setebos` file with `setebos init`.
