@@ -13,7 +13,8 @@ class Setebos::Config
   #   Config.parse(./setebos.yml)
   #   # => Hash
   #
-  # Returns an HashWithIndifferentAccess or nil.
+  # Returns an HashWithIndifferentAccess
+  # Exit with a message if an error is rescued.
   def self.parse(path)
     config = YAML.load(
       ERB.new(
@@ -22,7 +23,11 @@ class Setebos::Config
     )
 
     HashWithIndifferentAccess.new(config)
+
+  # Exit with a message if error.
+  rescue Errno::ENOENT
+    Logger.error 'Nonexistent file.'
   rescue
-    nil
+    Logger.error 'Invalid file.'
   end
 end
