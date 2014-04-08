@@ -7,7 +7,7 @@ class Logger
   # Pre-formatted log.
   # -------------------------------------------------------
 
-  # Public: Print a success message and exit.
+  # Public: Print a success message.
   #
   # message  - message.
   #
@@ -16,18 +16,26 @@ class Logger
     Logger.log message.colorize(:green).bold
   end
 
-  # Public: Print an error message and exit.
+  # Public: Print an error message and **exit**.
   #
   # message  - message.
-  # exit_now - should exit the program? Default to true.
   #
   # Returns nothing.
-  def self.error(message, exit_now: true)
+  def self.error(message)
     Logger.log message.colorize(:red).bold
-    exit 1 if exit_now
+    exit 1
   end
 
-  # Public: Print an info message and exit.
+  # Public: Print a warning message.
+  #
+  # message  - message.
+  #
+  # Returns nothing.
+  def self.warning(message)
+    Logger.log message.colorize(:orange)
+  end
+
+  # Public: Print an info message.
   #
   # message  - message.
   #
@@ -36,7 +44,7 @@ class Logger
     Logger.log message.colorize(:blue)
   end
 
-  # Public: Print a message and exit.
+  # Public: Print a message.
   #
   # message  - message.
   #
