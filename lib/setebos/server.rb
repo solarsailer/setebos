@@ -1,4 +1,3 @@
-require 'setebos/logger'
 require 'net/scp'
 
 # Public: Server object.
