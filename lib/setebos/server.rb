@@ -36,17 +36,22 @@ class Setebos::Server
   #   send_files([ {from: /l, to: /r}
   #              , {from: /l2, to: /r2}
   #              ])
-  #   # => nil
+  #   # => []
   #
-  # Returns nothing.
+  # Returns an Array containing the files which haven't been sent.
   def send_files(files)
+    errors = []
+
     files.each do |f|
       if f[:from] and f[:to]
         scp f[:from], f[:to]
       else
-        Logger.error "File: cannot send #{f}."
+        errors << f
       end
     end
+
+    # Return unsent files.
+    errors
   end
 
   # Public: Create a remote path.
