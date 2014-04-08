@@ -10,10 +10,10 @@ class Setebos::Server
   # hostname - the name of the server.
   # user     - (optional) the name of the user (default to root).
   # password - (optional) the password of the user.
-  def initialize(hostname, user = 'root', password = nil)
+  def initialize(hostname, options = {})
     @hostname = hostname
-    @user     = user
-    @password = password
+    @user     = options[:user]     || 'root'
+    @password = options[:password] || nil
   end
 
   # Public: Test the connection to the server.
