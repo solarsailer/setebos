@@ -3,7 +3,7 @@ require 'net/scp'
 
 # Public: Server object.
 class Setebos::Server
-  attr_accessor :host, :user, :password
+  attr_accessor :hostname, :user, :password
 
   # Public: Create a server object.
   #
@@ -20,7 +20,7 @@ class Setebos::Server
   #
   # Returns `true` if success, `false` otherwise.
   def test
-    system("ssh -q #{host} 'echo test'")
+    system("ssh -q #{remote()} 'echo test'")
   end
 
   # Public: Send a group of files.
@@ -44,6 +44,24 @@ class Setebos::Server
         Logger.error "File: cannot send #{f}."
       end
     end
+  end
+
+  # Private: Create a remote path.
+  #
+  # Examples
+  #
+  #   # Given a server with hostname = 'server' and user = 'user':
+  #   remote()
+  #   # => 'user@server'
+  #
+  #   # Given a server with hostname = 'server' and user = 'user'
+  #   # and password = 'password':
+  #   remote()
+  #   # => 'user:password@server'
+  #
+  # Returns a String containing the user/password/hostname.
+  def remote
+    "#{@user}#{@password ? ":#{@password}" : ''}@#{@hostname}"
   end
 
   # -------------------------------------------------------
@@ -70,23 +88,5 @@ class Setebos::Server
     Net::SCP.start(@hostname, @user, hash) do |scp|
       scp.upload! local_path, remote_path
     end
-  end
-
-  # Private: Create an host path.
-  #
-  # Examples
-  #
-  #   # Given a server with hostname = 'server' and user = 'user':
-  #   host()
-  #   # => 'user@server'
-  #
-  #   # Given a server with hostname = 'server' and user = 'user'
-  #   # and password = 'password':
-  #   host()
-  #   # => 'user:password@server'
-  #
-  # Returns a host String.
-  def host
-    "#{@user}#{@password ? ":#{@password}" : ''}@#{@hostname}"
   end
 end
