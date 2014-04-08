@@ -1,4 +1,6 @@
 require 'setebos/logger'
+require 'setebos/config'
+require 'setebos/server'
 
 class Setebos::Run
 
