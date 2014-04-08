@@ -55,6 +55,7 @@ bin/setebos
 
 ## Future
 
+* Glob file with special path (e.g. `~/`).
 * Support port in the `server` section.
 * Look for a `.setebos` file automatically when not provided with the `run` command.
 * Support user generation in a new `users` section.
