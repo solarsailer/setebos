@@ -53,6 +53,15 @@ class Setebos::Server
     errors
   end
 
+  def execute_scripts(scripts)
+    scripts.each do |s|
+      name = File.basename(s)
+
+      scp s, '/tmp'
+      # TODO
+    end
+  end
+
   # Public: Create a remote path.
   #
   # Examples
@@ -96,6 +105,17 @@ class Setebos::Server
   # -------------------------------------------------------
 
   private
+
+  # Private: Execute a command via SSH.
+  #
+  # command - the String command to execute.
+  #
+  # Returns nothing.
+  def ssh(command)
+    Net::SSH.start(@hostname, @user, password_hash()) do |ssh|
+      ssh.exec! command
+    end
+  end
 
   # Private: Send a file via SCP.
   #
