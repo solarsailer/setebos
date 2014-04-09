@@ -3,6 +3,10 @@ Setebos
 
 Setebos is a dead-simple tool to configure a server.
 
+## Disclaimer
+
+**Not fully usable yet. WORK IN PROGRESS.**
+
 ## How to use?
 
 Write a simple YAML file (preferably called `.setebos`):
