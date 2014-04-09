@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    setebos (0.0.1)
+    setebos (0.1.0.pre.alpha)
 
 GEM
   remote: https://rubygems.org/
