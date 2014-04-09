@@ -29,6 +29,19 @@ describe Setebos::Server do
     end
   end
 
+  describe 'when asked to get a password hash' do
+    it 'must return an empty hash' do
+      server = Setebos::Server.new('test')
+      server.password_hash.must_equal Hash.new
+    end
+
+    it 'must return an hash with the password' do
+      server = Setebos::Server.new('test', password: 'test42')
+      hash = {:password => 'test42'}
+      server.password_hash.must_equal hash
+    end
+  end
+
   describe 'when asked to test a connection' do
     it 'must create a host for user@host' do
       # Server.

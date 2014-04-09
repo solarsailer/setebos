@@ -71,6 +71,26 @@ class Setebos::Server
     "#{@user}#{@password ? ":#{@password}" : ''}@#{@hostname}"
   end
 
+  # Public: Create an Hash with a password if it exists.
+  #
+  # Examples
+  #
+  #   # If @password = '' or nil
+  #   password_hash()
+  #   # => {}
+  #
+  #   # If @password = 'test42'
+  #   password_hash()
+  #   # => {:password => 'test42'}
+  #
+  # Returns an empty Hash or a Hash with the password.
+  def password_hash
+    hash = {}
+    hash[:password] = @password if @password
+
+    hash
+  end
+
   # -------------------------------------------------------
   # Private.
   # -------------------------------------------------------
@@ -89,10 +109,7 @@ class Setebos::Server
   #
   # Returns nothing.
   def scp(local_path, remote_path)
-    hash = {}
-    hash[:password] = @password if @password
-
-    Net::SCP.start(@hostname, @user, hash) do |scp|
+    Net::SCP.start(@hostname, @user, password_hash()) do |scp|
       scp.upload! local_path, remote_path
     end
   end
