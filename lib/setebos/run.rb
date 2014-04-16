@@ -14,6 +14,9 @@ class Setebos::Run
 
     # Send files.
     send_files(@config[:files])
+
+    # Execute scripts.
+    execute_scripts(@config[:scripts])
   end
 
   # -------------------------------------------------------
@@ -88,5 +91,14 @@ class Setebos::Run
     end
 
     Logger.success Setebos::Messages::SEND_FILES_OK
+  end
+
+  # Private: Execute scripts on the machine.
+  #
+  # scripts_section - Scripts section of the config file.
+  #
+  # Returns nothing.
+  def execute_scripts(scripts_section)
+    @server.execute_scripts(scripts_section)
   end
 end

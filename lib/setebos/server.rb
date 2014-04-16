@@ -53,13 +53,27 @@ class Setebos::Server
     errors
   end
 
+  # Public: Execute a list of scripts on the server.
+  #
+  # scripts - list of scripts to execute.
+  #
+  # Returns an Array containing the scripts that exited with an error.
   def execute_scripts(scripts)
+    errors = []
+
     scripts.each do |s|
       name = File.basename(s)
 
       scp s, '/tmp'
-      # TODO
+      success = ssh(
+        "chmod +x /tmp/#{name} && /tmp/#{name}", # exec
+        "rm /tmp/#{name}" # clean
+      )
+
+      errors << s if not success
     end
+
+    errors
   end
 
   # Public: Create a remote path.
@@ -106,15 +120,25 @@ class Setebos::Server
 
   private
 
-  # Private: Execute a command via SSH.
+  # Private: Execute commands via SSH.
   #
-  # command - the String command to execute.
+  # command      - the String command to execute.
+  # post_command - a String command to execute after the main one (clean).
   #
-  # Returns nothing.
-  def ssh(command)
+  # Returns the result Boolean of the command.
+  def ssh(command, post_command = nil)
+    success = false
+
     Net::SSH.start(@hostname, @user, password_hash()) do |ssh|
       ssh.exec! command
+
+      # Capture the result value of the command.
+      success = (ssh.exec! 'echo $?').to_i == 0 ? true : false
+
+      ssh.exec! post_command if post_command
     end
+
+    success
   end
 
   # Private: Send a file via SCP.
